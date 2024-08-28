@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Venta>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class=" col-md-12">
+    <div class=" card">
+        <div class=" card-header text-center">
+            <h5>Ventas</h5>
+        </div>
+        <div card-body>
+            <table class="table table-stripped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Estado</th>                        
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.IdVenta</th>
+                            <td>@Html.DisplayFor(modelItem => item.Fecha))</td>
+                            <td>@Html.DisplayFor(modelItem => item.Cliente)</td>
+                            <td>@Html.DisplayFor(modelItem => item.EstadoVenta)</td>                          
+                            <td>
+                                <a asp-action="GenerarPdf" asp-route-id="@item.IdVenta" class="btn btn-success">Generar Factura</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

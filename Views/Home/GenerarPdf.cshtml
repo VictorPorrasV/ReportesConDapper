@@ -1,0 +1,161 @@
+﻿@model ReportesConDapper.Models.Venta
+@{
+    ViewData["Title"] = "Venta";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ImprimirVenta</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #F9F6F1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contenedor {
+            width: 800px;
+            margin: 20px auto;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #D07D5C; /* Terracota */
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .title {
+            font-weight: bold;
+            color: #D07D5C; /* Terracota */
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .title2 {
+            font-weight: bold;
+            color: #D07D5C; /* Terracota */
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .text {
+            font-size: 14px;
+            color: #6E6E6E;
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+            table th, table td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #E0E0E0;
+            }
+
+            table th {
+                background-color: #D07D5C; /* Terracota */
+                color: #FFFFFF;
+                font-size: 16px;
+            }
+
+            table td {
+                font-size: 14px;
+                color: #333333;
+            }
+
+        .total {
+            font-weight: bold;
+            color: #D07D5C; /* Terracota */
+            background-color: #FBE8E6; /* Light terracota */
+        }
+
+        .amount {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        <table>
+            <tr>
+                <td><img src="~/imagenes/negocio.png" class="logo" alt="Logo" /></td>
+                <td style="text-align:right;">
+                    <p class="title2">NÚMERO VENTA</p>
+                    <p>@Model.IdVenta</p>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td>
+                    <p class="title">TECNOLOGERS</p>
+                    <p class="text">Dirección: Tegucigalpa, Bo el centro, Calle 123</p>
+                    <p class="text">Correo: tecnologershn@gmail.com</p>
+                </td>
+                <td style="text-align:right;">
+                    <p class="title">CLIENTE</p>
+                    <p class="text">@Model.Cliente</p>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th style="width:130px">Cantidad</th>
+                    <th style="width:130px">Precio</th>
+                    <th style="width:130px">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item in Model.DetallesVenta)
+                    {
+                        <tr>
+                            <td>@item.IdProductoNavigation!.Nombre</td>
+                            <td>@item.Cantidad</td>
+                            <td class="amount">$ @item.IdProductoNavigation.Precio.ToString("F2")</td>
+                            <td class="amount">$ @item.TotalProducto.ToString("F2")</td>
+                        </tr>
+                    }
+                }
+                <tr class="total">
+                    <td colspan="2">Sub Total</td>
+                    <td colspan="2" class="amount">$ @Model.SubTotal.ToString("F2")</td>
+                </tr>
+                <tr class="total">
+                    <td colspan="2">ISV</td>
+                    <td colspan="2" class="amount">$ @Model.Impuesto.ToString("F2")</td>
+                </tr>
+                <tr class="total">
+                    <td colspan="2">Total</td>
+                    <td colspan="2" class="amount">$ @Model.Total.ToString("F2")</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
